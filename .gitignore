@@ -1,0 +1,33 @@
+# Private working documents. Never commit these.
+PROJECT.md
+LOG.md
+costs.csv
+CLAUDE.local.md
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+*.egg-info/
+
+# Local Claude Code state (settings.json IS committed, settings.local.json is not)
+.claude/settings.local.json
+
+# Downloaded data and scratch structures.
+# Curated inputs under data/ are tracked on purpose; raw downloads and scratch are not.
+data/raw/
+scratch/
+notebooks/scratch/
+results/scratch/
+
+# Model weights never live in git. They live in a Modal Volume.
+weights/
+*.pt
+*.pkl
+*.npz
+
+# macOS
+.DS_Store
