@@ -155,9 +155,15 @@ shell in it and inspect rather than guessing from logs.
 
 ## Cost accounting
 
-Every remote function is wrapped with the decorator in `infra/costs.py`, which appends one
-row per job to a local `costs.csv`: timestamp, function name, GPU type, GPU seconds, CPU
-seconds, dollars, number of inputs, git sha, notes.
+Every remote call is wrapped in `with track_cost(...)` from `infra/costs.py`, in the local
+entrypoint, which appends one row per job to a local `costs.csv`: timestamp, function name,
+GPU type, GPU seconds, CPU seconds, estimated dollars, number of inputs, git sha, git dirty
+flag, whether the job produces results, notes. The full schema is in the module docstring.
+It runs on the laptop, not in the container, because a container's filesystem is discarded
+when it exits.
+
+A job marked `produces_results=True` refuses to start on an uncommitted working tree, so
+every number in the results table traces to a commit.
 
 Two reasons this is not optional. The headline metric of this benchmark is enrichment per
 GPU-dollar, which cannot be reconstructed after the fact if `n_inputs` was never recorded.
