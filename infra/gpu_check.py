@@ -16,12 +16,8 @@ def check_gpu():
     print(torch.__version__)
     print(torch.cuda.get_device_name(0))
     print(torch.cuda.get_device_properties(0).total_memory)
-    try:
-        result = subprocess.run(["nvidia-smi"], capture_output=True, text=True, check=True)
-        print(result.stdout)
-    except subprocess.CalledProcessError as e:
-        print("Error executing nvidia-smi:", e)
-        print("Output:", e.output)
+    result = subprocess.run(["nvidia-smi"], capture_output=True, text=True, check=True)
+    print(result.stdout)
 
 @app.local_entrypoint()
 def main():
